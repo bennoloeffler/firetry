@@ -15,21 +15,12 @@
 (defn display-re-pressed-example []
   (let [re-pressed-example (re-frame/subscribe [::subs/re-pressed-example])]
     [:div
-
      [:p
-      [:span "Re-pressed is listening. type"]
-      [:strong [:code " h e l l o "]]]
+      [:span "Re-pressed is listening. type "]
+      [:strong [:code "h e l l o "]]]
 
      (when-let [rpe @re-pressed-example]
-       [:div
-        {:style {:padding          "16px"
-                 :background-color "lightgrey"
-                 :border           "solid 1px grey"
-                 :border-radius    "4px"
-                 :margin-top       "16px"}}
-
-        rpe])]))
-
+       [:div.button.is-round.mt-3 rpe])]))
 
 (defn data-panel []
   (let [data (re-frame/subscribe [::subs/data])]
@@ -112,9 +103,11 @@
        [:div.subtitle
         [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
          "go to Home Page"]]
+
        [:div.box (str "git tag: " config/version)] [:br]
-       #_[:div.box [display-re-pressed-example]]
+
        [:div.box [:b "subscription (<sub-fb \"user\") "] @user]
+
        [:div.box [:b "subscription (<sub-fb-col \"users\") "]
         [:ul (map (fn [[k v]] ^{:key k} [:li  (str (:name v) ", " (or (:born v) "birth unknown") ", id: " k)])
                   @users)]]
@@ -123,9 +116,8 @@
         [:h3 (str "screen-width: " @(re-frame/subscribe [::bp/screen-width]))]
         [:h3 (str "screen: " @(re-frame/subscribe [::bp/screen]))]]
 
-       [:div.box
-        [:h3 (str "screen-width: " @(re-frame/subscribe [::bp/screen-width]))]
-        [:h3 (str "screen: " @(re-frame/subscribe [::bp/screen]))]]])))
+       [:div.box [display-re-pressed-example]]])))
+
 
 
 
