@@ -1,0 +1,54 @@
+{:nrepl {:port 8777}
+
+ 
+
+ :source-paths ["src" "test"]
+
+ :lein   true
+ #_:dependencies
+ #_[[reagent "1.1.1"]
+    [re-frame "1.4.2"]
+    [bidi "2.1.6"]
+    [clj-commons/pushy "0.3.10"]
+    [re-pressed "0.3.2"]
+    [breaking-point "0.1.2"]
+    [binaryage/devtools "1.0.6"]
+    [re-frisk "1.6.0"]
+    [day8/shadow-git-inject "0.0.5"]
+    [funcool/promesa "11.0.678"]]
+
+ :build-defaults
+ {:build-hooks [(shadow-git-inject.core/hook)]}
+
+ :dev-http
+ {8280 "resources/public"
+  8290 "target/browser-test"}
+
+ :builds {:app
+          {:target     :browser
+           :output-dir "resources/public/js/compiled"
+           :asset-path "/js/compiled"
+           :modules
+           {:app {:init-fn firetry.core/init}}
+           :compiler-options
+           {:closure-defines
+            { firetry.config/version :shadow-git-inject/version}}
+           :devtools
+           {:preloads [
+                       re-frisk.preload]}
+           :dev
+           {:compiler-options
+            {:closure-defines
+             {}}}}
+          :browser-test
+          {:target    :browser-test
+           :ns-regexp "-test$"
+           :runner-ns shadow.test.browser
+           :test-dir  "target/browser-test"}
+          :karma-test
+          {:target    :karma
+           :ns-regexp "-test$"
+           :output-to "target/karma-test.js"}}}
+
+
+
