@@ -1,10 +1,10 @@
-{:nrepl {:port 8777}
+{:nrepl        {:port 8777}
 
- 
+
 
  :source-paths ["src" "test"]
 
- :lein   true
+ :lein         true
  #_:dependencies
  #_[[reagent "1.1.1"]
     [re-frame "1.4.2"]
@@ -24,31 +24,27 @@
  {8280 "resources/public"
   8290 "target/browser-test"}
 
- :builds {:app
-          {:target     :browser
-           :output-dir "resources/public/js/compiled"
-           :asset-path "/js/compiled"
-           :modules
-           {:app {:init-fn firetry.core/init}}
-           :compiler-options
-           {:closure-defines
-            { firetry.config/version :shadow-git-inject/version}}
-           :devtools
-           {:preloads [
-                       re-frisk.preload]}
-           :dev
-           {:compiler-options
-            {:closure-defines
-             {}}}}
-          :browser-test
-          {:target    :browser-test
-           :ns-regexp "-test$"
-           :runner-ns shadow.test.browser
-           :test-dir  "target/browser-test"}
-          :karma-test
-          {:target    :karma
-           :ns-regexp "-test$"
-           :output-to "target/karma-test.js"}}}
+ :builds       {:app
+                {:target     :browser
+                 :output-dir "resources/public/js/compiled"
+                 :asset-path "/js/compiled"
+                 :modules
+                 {:app {:init-fn firetry.core/init}}
+                 :git-inject {:ignore-dirty? false}
+                 :compiler-options
+                 {:closure-defines {firetry.config/version :shadow-git-inject/version}}
+                 :devtools
+                 {:preloads [re-frisk.preload]}
+                 :dev {:compiler-options {:closure-defines {}}}}
+                :browser-test
+                {:target    :browser-test
+                 :ns-regexp "-test$"
+                 :runner-ns shadow.test.browser
+                 :test-dir  "target/browser-test"}
+                :karma-test
+                {:target    :karma
+                 :ns-regexp "-test$"
+                 :output-to "target/karma-test.js"}}}
 
 
 
